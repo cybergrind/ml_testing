@@ -26,10 +26,14 @@ dependencies:
   english_words: ^3.1.0
   camera:
   path_provider:
+  mobx:
+  flutter_mobx:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
+  mobx_codegen:
 
 
 # For information on the generic Dart part of this file, see the

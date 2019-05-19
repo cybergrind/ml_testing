@@ -5,6 +5,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
+import './main.dart';
 
 // A screen that allows users to take a picture using a given camera
 class TakePictureScreen extends StatefulWidget {
@@ -87,15 +88,18 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // Attempt to take a picture and log where it's been saved
             await _controller.takePicture(path);
 
-            // If the picture was taken, display it on a new screen
+            /*// If the picture was taken, display it on a new screen
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => DisplayPictureScreen(imagePath: path),
               ),
-            );
+            );*/
+            print('Set image path => ${path}');
+            mainState.setImagePath(path);
           } catch (e) {
             // If an error occurs, log the error to the console.
+            print('During take picture:');
             print(e);
           }
         },
