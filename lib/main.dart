@@ -34,18 +34,17 @@ class ImageTempRoute<T> extends MaterialPageRoute<T> {
 
 }
 
-Future<void> pushDisplay(context, image) async {
+Future<void> pushDisplay(context) async {
   print('Before delay');
-  await Future.delayed(Duration(milliseconds: 1));
-
-  print('Display picture: ${mainState.displayPicture}');
-  mainState.setDisplayPicture(true);
+  // await Future.delayed(Duration(milliseconds: 1));
   Navigator.push(
     context,
     ImageTempRoute(
-      (context) => DisplayPictureScreen(imagePath: mainState.imagePath),
+          (context) => DisplayPictureScreen(imagePath: mainState.imagePath),
     ),
   );
+  print('Display picture: ${mainState.displayPicture}');
+
 }
 
 Widget CamController = Observer(
@@ -53,9 +52,10 @@ Widget CamController = Observer(
   builder: (context) {
     print('In builder. ImagePath: ${mainState.imagePath} Display: ${mainState.displayPicture}');
     if (mainState.imagePath != null && !mainState.displayPicture) {
-      // return DisplayPictureScreen(imagePath: mainState.imagePath);
-      pushDisplay(context, mainState.imagePath);
-      // return Text('Has picture: ${mainState.imagePath}');
+      print('Push display');
+      Future.delayed(Duration(milliseconds: 1), () => pushDisplay(context));
+    } else {
+      print('Why we re here');
     }
 
     if (mainState.firstCamera != null) {
@@ -66,13 +66,14 @@ Widget CamController = Observer(
   },
 );
 
-Future<void> main() async {
-  // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-  // Get a specific camera from the list of available cameras
-  /*final firstCamera = cameras.first;*/
-  mainState.setCamera(cameras.first);
 
+Future<void> getCameras() async {
+  final cameras = await availableCameras();
+  mainState.setCamera(cameras.first);
+}
+
+void main() {
+  getCameras();
   runApp(
     MaterialApp(
       theme: ThemeData.dark(),
